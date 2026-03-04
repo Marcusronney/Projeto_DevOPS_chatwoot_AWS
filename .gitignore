@@ -1,0 +1,22 @@
+# Terraform local cache
+**/.terraform/
+.terraform/
+
+# State files (NUNCA versionar)
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Variable files com segredos (ajuste conforme seu repo)
+*.tfvars
+*.tfvars.json
+
+# CLI config (se existir)
+.terraformrc
+terraform.rc
+
+# Plan files (opcional)
+*.tfplan

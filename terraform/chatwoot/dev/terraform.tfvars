@@ -1,0 +1,7 @@
+aws_region   = "us-east-1"
+project      = "chatwoot"
+env          = "dev"
+vpc_cidr     = "10.0.0.0/16"
+cluster_name = "chatwoot-dev"
+# route53_zone_id = "ZXXXXXXXXXXXX"
+# domain_name     = "chatwoot.seudominio.com"
