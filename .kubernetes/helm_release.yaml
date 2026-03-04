@@ -1,0 +1,98 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: chatwoot
+  namespace: chatwoot
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: chatwoot
+      sourceRef:
+        kind: HelmRepository
+        name: chatwoot
+      interval: 30m
+
+  values:
+    # Se você aplicou o ServiceAccount (IRSA), use isso:
+    serviceAccount:
+      create: false
+      name: chatwoot
+
+    # -------------------------
+    # Ingress (ALB)
+    # -------------------------
+    ingress:
+      enabled: true
+      ingressClassName: alb
+      annotations:
+        alb.ingress.kubernetes.io/scheme: internet-facing
+        alb.ingress.kubernetes.io/target-type: ip
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+        alb.ingress.kubernetes.io/ssl-redirect: "443"
+        alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:CHANGEME:certificate/CHANGEME
+        external-dns.alpha.kubernetes.io/hostname: chatwoot.seudominio.com
+      hosts:
+        - host: chatwoot.seudominio.com
+          paths:
+            - path: /
+              pathType: Prefix
+
+    # -------------------------
+    # Postgres externo (RDS)
+    # -------------------------
+    postgresql:
+      enabled: false
+      postgresqlHost: CHANGEME_RDS_ENDPOINT
+      postgresqlPort: 5432
+      auth:
+        username: CHANGEME_DB_USER
+        database: CHANGEME_DB_NAME
+        postgresPassword: ""  # vem do secret abaixo
+
+    # Injeta senha do Postgres via Secret
+    extraEnvVars:
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: chatwoot-secrets
+            key: POSTGRES_PASSWORD
+
+      - name: SECRET_KEY_BASE
+        valueFrom:
+          secretKeyRef:
+            name: chatwoot-secrets
+            key: SECRET_KEY_BASE
+
+    # -------------------------
+    # Redis
+    # -------------------------
+    # Para evitar incompatibilidade com ElastiCache sem AUTH, subimos Redis interno:
+    redis:
+      enabled: true
+      architecture: standalone
+      auth:
+        enabled: true
+        password: "CHANGEME_REDIS_PASSWORD"
+      master:
+        persistence:
+          enabled: false
+
+    # -------------------------
+    # App env
+    # -------------------------
+    env:
+      FRONTEND_URL: "https://chatwoot.seudominio.com"
+      FORCE_SSL: "true"
+
+      # S3 attachments
+      ACTIVE_STORAGE_SERVICE: "amazon"
+      S3_BUCKET_NAME: "CHANGEME_S3_BUCKET_NAME"
+      AWS_REGION: "us-east-1"
+
+      # Se usar IRSA, deixe vazio:
+      AWS_ACCESS_KEY_ID: ""
+      AWS_SECRET_ACCESS_KEY: ""
+
+      # Opcional
+      ENABLE_ACCOUNT_SIGNUP: "false"
