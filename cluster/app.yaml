@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: argocd
   source:
-    repoURL: REPLACE_ME_GIT_REPO_URL
+    repoURL: https://github.com/Marcusronney/Projeto_DevOPS_chatwoot_AWS
     targetRevision: main
     path: clusters/dev
   syncPolicy:

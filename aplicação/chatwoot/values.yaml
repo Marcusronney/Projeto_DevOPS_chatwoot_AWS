@@ -10,9 +10,9 @@ ingress:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     alb.ingress.kubernetes.io/ssl-redirect: "443"
     alb.ingress.kubernetes.io/certificate-arn: "ACM_CERTIFICATE_ARN"
-    external-dns.alpha.kubernetes.io/hostname: "chatwoot.seudominio.com"
+    external-dns.alpha.kubernetes.io/hostname: "chatwoot.ronney.tech"
   hosts:
-    - host: "chatwoot.seudominio.com"
+    - host: "chatwoot.ronney.tech"
       paths:
         - path: /
           pathType: Prefix
