@@ -84,9 +84,9 @@ resource "aws_iam_role" "lbc" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [{
-      Effect = "Allow",
+      Effect    = "Allow",
       Principal = { Federated = module.eks.oidc_provider_arn },
-      Action = "sts:AssumeRoleWithWebIdentity",
+      Action    = "sts:AssumeRoleWithWebIdentity",
       Condition = {
         StringEquals = {
           "${local.oidc_provider_host}:sub" = "system:serviceaccount:${local.k8s_system_ns}:${local.lbc_sa_name}"
@@ -122,30 +122,30 @@ resource "helm_release" "aws_load_balancer_controller" {
     kubernetes_service_account.lbc
   ]
 
-set {
-  name  = "clusterName"
-  value = module.eks.cluster_name
-}
+  set {
+    name  = "clusterName"
+    value = module.eks.cluster_name
+  }
 
-set {
-  name  = "region"
-  value = var.aws_region
-}
+  set {
+    name  = "region"
+    value = var.aws_region
+  }
 
-set {
-  name  = "vpcId"
-  value = module.vpc.vpc_id
-}
+  set {
+    name  = "vpcId"
+    value = module.vpc.vpc_id
+  }
 
-set {
-  name  = "serviceAccount.create"
-  value = "false"
-}
+  set {
+    name  = "serviceAccount.create"
+    value = "false"
+  }
 
-set {
-  name  = "serviceAccount.name"
-  value = local.lbc_sa_name
-}
+  set {
+    name  = "serviceAccount.name"
+    value = local.lbc_sa_name
+  }
 }
 
 ############################################
@@ -186,9 +186,9 @@ resource "aws_iam_role" "externaldns" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [{
-      Effect = "Allow",
+      Effect    = "Allow",
       Principal = { Federated = module.eks.oidc_provider_arn },
-      Action = "sts:AssumeRoleWithWebIdentity",
+      Action    = "sts:AssumeRoleWithWebIdentity",
       Condition = {
         StringEquals = {
           "${local.oidc_provider_host}:sub" = "system:serviceaccount:${local.k8s_system_ns}:${local.externaldns_sa_name}"
@@ -224,45 +224,45 @@ resource "helm_release" "external_dns" {
     kubernetes_service_account.externaldns
   ]
 
-set {
-  name  = "provider"
-  value = "aws"
-}
+  set {
+    name  = "provider"
+    value = "aws"
+  }
 
-set {
-  name  = "policy"
-  value = "sync"
-}
+  set {
+    name  = "policy"
+    value = "sync"
+  }
 
-set {
-  name  = "registry"
-  value = "txt"
-}
+  set {
+    name  = "registry"
+    value = "txt"
+  }
 
-set {
-  name  = "txtOwnerId"
-  value = module.eks.cluster_name
-}
+  set {
+    name  = "txtOwnerId"
+    value = module.eks.cluster_name
+  }
 
-set {
-  name  = "serviceAccount.create"
-  value = "false"
-}
+  set {
+    name  = "serviceAccount.create"
+    value = "false"
+  }
 
-set {
-  name  = "serviceAccount.name"
-  value = local.externaldns_sa_name
-}
+  set {
+    name  = "serviceAccount.name"
+    value = local.externaldns_sa_name
+  }
 
-set {
-  name  = "aws.zoneType"
-  value = "public"
-}
+  set {
+    name  = "aws.zoneType"
+    value = "public"
+  }
 
-set {
-  name  = "aws.region"
-  value = var.aws_region
-}
+  set {
+    name  = "aws.region"
+    value = var.aws_region
+  }
 
 
   # Opcional: domainFilters[]
