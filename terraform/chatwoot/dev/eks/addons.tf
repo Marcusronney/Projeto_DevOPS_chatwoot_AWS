@@ -122,12 +122,30 @@ resource "helm_release" "aws_load_balancer_controller" {
     kubernetes_service_account.lbc
   ]
 
-  set { name = "clusterName", value = module.eks.cluster_name }
-  set { name = "region", value = var.aws_region }
-  set { name = "vpcId", value = module.vpc.vpc_id }
+set {
+  name  = "clusterName"
+  value = module.eks.cluster_name
+}
 
-  set { name = "serviceAccount.create", value = "false" }
-  set { name = "serviceAccount.name", value = local.lbc_sa_name }
+set {
+  name  = "region"
+  value = var.aws_region
+}
+
+set {
+  name  = "vpcId"
+  value = module.vpc.vpc_id
+}
+
+set {
+  name  = "serviceAccount.create"
+  value = "false"
+}
+
+set {
+  name  = "serviceAccount.name"
+  value = local.lbc_sa_name
+}
 }
 
 ############################################
@@ -206,17 +224,46 @@ resource "helm_release" "external_dns" {
     kubernetes_service_account.externaldns
   ]
 
-  set { name = "provider", value = "aws" }
-  set { name = "policy", value = "sync" }           # remove records quando o Ingress/Service some
-  set { name = "registry", value = "txt" }          # evita conflito
-  set { name = "txtOwnerId", value = module.eks.cluster_name }
+set {
+  name  = "provider"
+  value = "aws"
+}
 
-  set { name = "serviceAccount.create", value = "false" }
-  set { name = "serviceAccount.name", value = local.externaldns_sa_name }
+set {
+  name  = "policy"
+  value = "sync"
+}
 
-  # Restringe por zone id (melhor que deixar global)
-  set { name = "aws.zoneType", value = "public" }
-  set { name = "aws.region", value = var.aws_region }
+set {
+  name  = "registry"
+  value = "txt"
+}
+
+set {
+  name  = "txtOwnerId"
+  value = module.eks.cluster_name
+}
+
+set {
+  name  = "serviceAccount.create"
+  value = "false"
+}
+
+set {
+  name  = "serviceAccount.name"
+  value = local.externaldns_sa_name
+}
+
+set {
+  name  = "aws.zoneType"
+  value = "public"
+}
+
+set {
+  name  = "aws.region"
+  value = var.aws_region
+}
+
 
   # Opcional: domainFilters[]
   dynamic "set" {
