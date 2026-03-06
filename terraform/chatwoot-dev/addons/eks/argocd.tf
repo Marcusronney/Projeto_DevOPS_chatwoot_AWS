@@ -12,13 +12,13 @@ resource "kubernetes_namespace_v1" "argocd" {
 # Instala Argo CD via Helm
 resource "helm_release" "argocd" {
   name       = "argocd"
-  namespace  = kubernetes_namespace.argocd.metadata[0].name
+  namespace  = kubernetes_namespace_v1.argocd.metadata[0].name
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
   version    = "6.7.18" # você pode travar numa versão diferente
 
   # Garante que o namespace existe antes
-  depends_on = [kubernetes_namespace.argocd]
+  depends_on = [kubernetes_namespace_v1.argocd]
 
   # Recomendo manter simples no começo: acesso via port-forward.
   # Depois você pode habilitar Ingress/ALB quando quiser.
