@@ -201,9 +201,9 @@ resource "helm_release" "external_dns" {
   chart      = "external-dns"
   version    = "8.5.1"
 
-  timeout    = 900
-  wait       = true
-  atomic     = true
+  timeout = 900
+  wait    = true
+  atomic  = true
 
   depends_on = [
     kubernetes_service_account.externaldns
