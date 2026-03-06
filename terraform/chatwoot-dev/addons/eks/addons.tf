@@ -7,7 +7,7 @@ locals {
   lbc_sa_name         = "aws-load-balancer-controller"
   externaldns_sa_name = "external-dns"
 
-  oidc_provider_host = replace(module.eks.oidc_provider, "https://", "")
+  oidc_provider_host = replace(local.eks.oidc_provider, "https://", "")
 }
 
 ############################################
@@ -37,7 +37,7 @@ resource "aws_iam_policy" "lbc" {
 
   # Policy oficial recomendada (cole aqui o JSON completo).
   # Para não depender de arquivo externo, deixei inline.
-  # Você pode substituir por: policy = file("${path.module}/policies/lbc.json")
+  # Você pode substituir por: policy = file("${path.local}/policies/lbc.json")
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -85,7 +85,7 @@ resource "aws_iam_role" "lbc" {
     Version = "2012-10-17",
     Statement = [{
       Effect    = "Allow",
-      Principal = { Federated = module.eks.oidc_provider_arn },
+      Principal = { Federated = local.eks.oidc_provider_arn },
       Action    = "sts:AssumeRoleWithWebIdentity",
       Condition = {
         StringEquals = {
@@ -124,7 +124,7 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   set {
     name  = "clusterName"
-    value = module.eks.cluster_name
+    value = local.eks.cluster_name
   }
 
   set {
@@ -134,7 +134,7 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   set {
     name  = "vpcId"
-    value = module.vpc.vpc_id
+    value = local.vpc.vpc_id
   }
 
   set {
@@ -187,7 +187,7 @@ resource "aws_iam_role" "externaldns" {
     Version = "2012-10-17",
     Statement = [{
       Effect    = "Allow",
-      Principal = { Federated = module.eks.oidc_provider_arn },
+      Principal = { Federated = local.eks.oidc_provider_arn },
       Action    = "sts:AssumeRoleWithWebIdentity",
       Condition = {
         StringEquals = {
@@ -241,7 +241,7 @@ resource "helm_release" "external_dns" {
 
   set {
     name  = "txtOwnerId"
-    value = module.eks.cluster_name
+    value = local.eks.cluster_name
   }
 
   set {
