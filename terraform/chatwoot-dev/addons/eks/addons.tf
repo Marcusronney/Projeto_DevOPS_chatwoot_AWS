@@ -208,7 +208,7 @@ resource "helm_release" "external_dns" {
   namespace  = local.k8s_system_ns
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "external-dns"
-  version    = "8.7.0" # ajuste se quiser travar em outra
+  version    = "8.5.1" # ajuste se quiser travar em outra
 
   depends_on = [
     kubernetes_service_account.externaldns
