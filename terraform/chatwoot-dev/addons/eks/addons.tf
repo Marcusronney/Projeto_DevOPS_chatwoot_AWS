@@ -114,7 +114,7 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   set {
     name  = "clusterName"
-    value = local.eks.cluster_name
+    value = local.cluster_name
   }
 
   set {
@@ -124,7 +124,7 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   set {
     name  = "vpcId"
-    value = local.vpc.vpc_id
+    value = value = local.vpc_id
   }
 
   set {
@@ -231,7 +231,7 @@ resource "helm_release" "external_dns" {
 
   set {
     name  = "txtOwnerId"
-    value = local.eks.cluster_name
+    value = local.cluster_name
   }
 
   set {
