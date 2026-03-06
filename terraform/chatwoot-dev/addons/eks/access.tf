@@ -6,7 +6,7 @@ resource "aws_eks_access_entry" "admin_user" {
 
 resource "aws_eks_access_policy_association" "admin_policy" {
 
-  cluster_name = local.cluster_name
+  cluster_name  = local.cluster_name
   principal_arn = aws_eks_access_entry.admin_user.principal_arn
 
   policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
