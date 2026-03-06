@@ -1,5 +1,3 @@
-
-
 ############################################
 # 3.1 Metrics Server
 ############################################
@@ -10,7 +8,6 @@ resource "helm_release" "metrics_server" {
   chart      = "metrics-server"
   version    = "3.12.2"
 
-  # Em EKS costuma ser ok; se quiser remover depois, basta tirar este set.
   set {
     name  = "args[0]"
     value = "--kubelet-insecure-tls"
@@ -21,18 +18,12 @@ resource "helm_release" "metrics_server" {
 # 3.2 AWS Load Balancer Controller (IRSA + Helm)
 ############################################
 
-# IAM Policy (Load Balancer Controller)
 resource "aws_iam_policy" "lbc" {
   name = "${local.name_prefix}-lbc-policy"
 
-  # Policy oficial recomendada (cole aqui o JSON completo).
-  # Para não depender de arquivo externo, deixei inline.
-  # Você pode substituir por: policy = file("${path.local}/policies/lbc.json")
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-      # Observação: esta policy abaixo é um "esqueleto" funcional,
-      # mas em produção é melhor usar a policy oficial completa do controller.
       {
         Effect = "Allow"
         Action = [
@@ -106,7 +97,7 @@ resource "helm_release" "aws_load_balancer_controller" {
   namespace  = local.k8s_system_ns
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
-  version    = "1.7.2" # ajuste se quiser travar em outra
+  version    = "1.7.2"
 
   depends_on = [
     kubernetes_service_account.lbc
@@ -208,7 +199,11 @@ resource "helm_release" "external_dns" {
   namespace  = local.k8s_system_ns
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "external-dns"
-  version    = "8.5.1" # ajuste se quiser travar em outra
+  version    = "8.5.1"
+
+  timeout    = 900
+  wait       = true
+  atomic     = true
 
   depends_on = [
     kubernetes_service_account.externaldns
@@ -254,8 +249,22 @@ resource "helm_release" "external_dns" {
     value = var.aws_region
   }
 
+  # Força uso da imagem oficial do projeto
+  set {
+    name  = "image.registry"
+    value = "registry.k8s.io"
+  }
 
-  # Opcional: domainFilters[]
+  set {
+    name  = "image.repository"
+    value = "external-dns/external-dns"
+  }
+
+  set {
+    name  = "image.tag"
+    value = "v0.15.0"
+  }
+
   dynamic "set" {
     for_each = var.externaldns_domain_filters
     content {
