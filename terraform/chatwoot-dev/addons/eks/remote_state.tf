@@ -2,7 +2,7 @@ data "terraform_remote_state" "infra" {
   backend = "s3"
   config = {
     bucket         = "bucketchatwootprojetoaws"
-    key            = "chatwoot/dev/infra.tfstate"   # ajuste para a key real do infra
+    key            = "chatwoot/dev/terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "bucketchatwootlock"
     encrypt        = true

@@ -200,9 +200,8 @@ resource "aws_security_group_rule" "redis_egress_all" {
 ############################
 resource "random_password" "db" {
   length  = 24
-  special = true
+  special = false
 }
-
 resource "aws_db_subnet_group" "rds" {
   name       = "${local.name_prefix}-rds-subnets"
   subnet_ids = module.vpc.private_subnets

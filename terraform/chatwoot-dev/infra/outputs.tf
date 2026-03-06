@@ -49,3 +49,11 @@ output "redis_endpoint" {
 output "redis_port" {
   value = aws_elasticache_cluster.redis.cache_nodes[0].port
 }
+
+output "oidc_provider" {
+  value = module.eks.oidc_provider
+}
+
+output "oidc_provider_arn" {
+  value = module.eks.oidc_provider_arn
+}

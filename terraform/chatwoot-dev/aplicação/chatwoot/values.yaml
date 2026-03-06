@@ -1,5 +1,14 @@
 # -------------------------
-# Ingress (AWS Load Balancer Controller) + ExternalDNS
+# ServiceAccount (pronto para IRSA no S3)
+# -------------------------
+serviceAccount:
+  create: true
+  name: chatwoot
+  annotations:
+    eks.amazonaws.com/role-arn: "CHATWOOT_IRSA_ROLE_ARN"
+
+# -------------------------
+# Ingress (AWS Load Balancer Controller + ExternalDNS)
 # -------------------------
 ingress:
   enabled: true
@@ -16,35 +25,22 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
+  tls: []
 
 # -------------------------
-# Postgres externo (RDS)
+# PostgreSQL externo (RDS)
 # -------------------------
 postgresql:
   enabled: false
   postgresqlHost: "RDS_ENDPOINT"
   postgresqlPort: 5432
   auth:
-    username: "DB_USER"
-    database: "DB_NAME"
-    postgresPassword: ""  # vem do Secret via extraEnvVars abaixo
-
-# injeta segredo no pod
-extraEnvVars:
-  - name: SECRET_KEY_BASE
-    valueFrom:
-      secretKeyRef:
-        name: chatwoot-secrets
-        key: SECRET_KEY_BASE
-
-  - name: POSTGRES_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: chatwoot-secrets
-        key: POSTGRES_PASSWORD
+    username: "chatwoot"
+    database: "chatwoot"
+    postgresPassword: ""
 
 # -------------------------
-# Redis interno (para não depender do ElastiCache sem AUTH)
+# Redis interno
 # -------------------------
 redis:
   enabled: true
@@ -58,19 +54,18 @@ redis:
       enabled: false
 
 # -------------------------
-# Env do Chatwoot (S3 + URL)
+# Secret existente com envs do Chatwoot
+# -------------------------
+existingEnvSecret: chatwoot-secrets
+
+# -------------------------
+# Variáveis adicionais não sensíveis
+# Sensíveis ficam no Secret
 # -------------------------
 env:
-  FRONTEND_URL: "https://chatwoot.seudominio.com"
+  FRONTEND_URL: "https://chatwoot.ronney.tech"
   FORCE_SSL: "true"
-
-  # S3 attachments
-  ACTIVE_STORAGE_SERVICE: "amazon"
-  S3_BUCKET_NAME: "S3_BUCKET_NAME"
-  AWS_REGION: "us-east-1"
-
-  # se você não usar IRSA por enquanto, poderia colocar chaves aqui (não recomendado)
-  AWS_ACCESS_KEY_ID: ""
-  AWS_SECRET_ACCESS_KEY: ""
-
   ENABLE_ACCOUNT_SIGNUP: "false"
+  ACTIVE_STORAGE_SERVICE: "amazon"
+  AWS_REGION: "us-east-1"
+  S3_BUCKET_NAME: "S3_BUCKET_NAME"
