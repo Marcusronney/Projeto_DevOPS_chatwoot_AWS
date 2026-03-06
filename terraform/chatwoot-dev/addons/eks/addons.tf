@@ -1,14 +1,4 @@
-############################################
-# Locals
-############################################
-locals {
-  k8s_system_ns = "kube-system"
 
-  lbc_sa_name         = "aws-load-balancer-controller"
-  externaldns_sa_name = "external-dns"
-
-  oidc_provider_host = replace(local.eks.oidc_provider, "https://", "")
-}
 
 ############################################
 # 3.1 Metrics Server
