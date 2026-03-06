@@ -75,7 +75,7 @@ resource "aws_iam_role" "lbc" {
     Version = "2012-10-17",
     Statement = [{
       Effect    = "Allow",
-      Principal = { Federated = local.eks.oidc_provider_arn },
+      Principal = { Federated = local.oidc_provider_arn },
       Action    = "sts:AssumeRoleWithWebIdentity",
       Condition = {
         StringEquals = {
@@ -177,7 +177,7 @@ resource "aws_iam_role" "externaldns" {
     Version = "2012-10-17",
     Statement = [{
       Effect    = "Allow",
-      Principal = { Federated = local.eks.oidc_provider_arn },
+      Principal = { Federated = local.oidc_provider_arn },
       Action    = "sts:AssumeRoleWithWebIdentity",
       Condition = {
         StringEquals = {

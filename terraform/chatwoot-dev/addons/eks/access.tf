@@ -1,5 +1,5 @@
 resource "aws_eks_access_entry" "admin_user" {
-  cluster_name  = module.eks.cluster_name
+  cluster_name  = local.eks.cluster_name
   principal_arn = "arn:aws:iam::762012032320:user/projeto_chatwoot"
   type          = "STANDARD"
 }
