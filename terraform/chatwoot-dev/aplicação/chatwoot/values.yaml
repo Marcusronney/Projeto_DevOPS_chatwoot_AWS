@@ -18,7 +18,7 @@ ingress:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/certificate-arn: "ACM_CERTIFICATE_ARN"
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:762012032320:certificate/0b2c2f59-afd2-4ace-98bc-c67fd81b1518"
     external-dns.alpha.kubernetes.io/hostname: "chatwoot.ronney.tech"
   hosts:
     - host: "chatwoot.ronney.tech"
@@ -32,7 +32,7 @@ ingress:
 # -------------------------
 postgresql:
   enabled: false
-  postgresqlHost: "RDS_ENDPOINT"
+  postgresqlHost: "chatwoot-dev-postgres.car4ygsuqsqr.us-east-1.rds.amazonaws.com"
   postgresqlPort: 5432
   auth:
     username: "chatwoot"
@@ -68,4 +68,4 @@ env:
   ENABLE_ACCOUNT_SIGNUP: "false"
   ACTIVE_STORAGE_SERVICE: "amazon"
   AWS_REGION: "us-east-1"
-  S3_BUCKET_NAME: "S3_BUCKET_NAME"
+  S3_BUCKET_NAME: "bucketchatwootprojetoaws"
