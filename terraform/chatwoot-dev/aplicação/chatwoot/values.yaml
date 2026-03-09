@@ -5,7 +5,7 @@ serviceAccount:
   create: true
   name: chatwoot
   annotations:
-    eks.amazonaws.com/role-arn: "CHATWOOT_IRSA_ROLE_ARN"
+    eks.amazonaws.com/role-arn: "arn:aws:iam::762012032320:role/chatwoot-dev-chatwoot-irsa"
 
 # -------------------------
 # Ingress (AWS Load Balancer Controller + ExternalDNS)
@@ -68,4 +68,4 @@ env:
   ENABLE_ACCOUNT_SIGNUP: "false"
   ACTIVE_STORAGE_SERVICE: "amazon"
   AWS_REGION: "us-east-1"
-  S3_BUCKET_NAME: "bucketchatwootprojetoaws"
+  S3_BUCKET_NAME: "aws_s3_bucket.attachments.bucket"
