@@ -13,3 +13,4 @@ variable "externaldns_domain_filters" {
   type    = list(string)
   default = []
 }
+
