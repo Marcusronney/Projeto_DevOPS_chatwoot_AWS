@@ -13,6 +13,9 @@ serviceAccount:
 ingress:
   enabled: true
   ingressClassName: alb
+  hostname: "chatwoot.ronney.tech"
+  path: /
+  pathType: Prefix
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
@@ -20,12 +23,6 @@ ingress:
     alb.ingress.kubernetes.io/ssl-redirect: "443"
     alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:762012032320:certificate/0b2c2f59-afd2-4ace-98bc-c67fd81b1518"
     external-dns.alpha.kubernetes.io/hostname: "chatwoot.ronney.tech"
-  hosts:
-    - host: "chatwoot.ronney.tech"
-      paths:
-        - path: /
-          pathType: Prefix
-  tls: []
 
 # -------------------------
 # PostgreSQL externo (RDS)
