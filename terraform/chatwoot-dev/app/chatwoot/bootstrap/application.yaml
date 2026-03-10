@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: chatwoot-bootstrap
+  namespace: argocd
+spec:
+  project: default
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: chatwoot
+
+  source:
+    repoURL: https://github.com/Marcusronney/Projeto_DevOPS_chatwoot_AWS.git
+    targetRevision: main
+    path: terraform/chatwoot-dev/app/chatwoot/bootstrap
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
