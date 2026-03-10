@@ -1,15 +1,9 @@
-# -------------------------
-# ServiceAccount (pronto para IRSA no S3)
-# -------------------------
 serviceAccount:
   create: true
   name: chatwoot
   annotations:
     eks.amazonaws.com/role-arn: "arn:aws:iam::762012032320:role/chatwoot-dev-chatwoot-irsa"
 
-# -------------------------
-# Ingress (AWS Load Balancer Controller + ExternalDNS)
-# -------------------------
 ingress:
   enabled: true
   ingressClassName: alb
@@ -24,9 +18,6 @@ ingress:
     alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:762012032320:certificate/0b2c2f59-afd2-4ace-98bc-c67fd81b1518"
     external-dns.alpha.kubernetes.io/hostname: "chatwoot.ronney.tech"
 
-# -------------------------
-# PostgreSQL externo (RDS)
-# -------------------------
 postgresql:
   enabled: false
   postgresqlHost: "chatwoot-dev-postgres.car4ygsuqsqr.us-east-1.rds.amazonaws.com"
@@ -36,33 +27,23 @@ postgresql:
     database: "chatwoot"
     postgresPassword: ""
 
-# -------------------------
-# Redis interno
-# -------------------------
 redis:
   enabled: true
   architecture: standalone
   auth:
     enabled: true
-    existingSecret: chatwoot-env
+    existingSecret: chatwoot-secrets
     existingSecretPasswordKey: REDIS_PASSWORD
   master:
     persistence:
       enabled: false
 
-# -------------------------
-# Secret existente com envs do Chatwoot
-# -------------------------
 existingEnvSecret: chatwoot-secrets
 
-# -------------------------
-# Variáveis adicionais não sensíveis
-# Sensíveis ficam no Secret
-# -------------------------
 env:
   FRONTEND_URL: "https://chatwoot.ronney.tech"
   FORCE_SSL: "true"
   ENABLE_ACCOUNT_SIGNUP: "false"
   ACTIVE_STORAGE_SERVICE: "amazon"
   AWS_REGION: "us-east-1"
-  S3_BUCKET_NAME: "aws_s3_bucket.attachments.bucket"
+  S3_BUCKET_NAME: "chatwoot-dev-chatwoot-attachments-762012032320"
