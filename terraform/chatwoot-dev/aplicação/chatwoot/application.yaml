@@ -5,17 +5,22 @@ metadata:
   namespace: argocd
 spec:
   project: default
+
   destination:
     server: https://kubernetes.default.svc
     namespace: chatwoot
 
-  source:
-    repoURL: https://chatwoot.github.io/charts
-    chart: chatwoot
-    targetRevision: "*"
-    helm:
-      valueFiles:
-        - values.yaml
+  sources:
+    - repoURL: https://chatwoot.github.io/charts
+      chart: chatwoot
+      targetRevision: "4.11.1"
+      helm:
+        valueFiles:
+          - $values/aplicação/chatwoot/values.yaml
+
+    - repoURL: https://github.com/Marcusronney/Projeto_DevOPS_chatwoot_AWS.git
+      targetRevision: main
+      ref: values
 
   syncPolicy:
     automated:
