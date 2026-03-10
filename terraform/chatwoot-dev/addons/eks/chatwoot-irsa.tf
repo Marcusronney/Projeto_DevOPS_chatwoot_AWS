@@ -34,7 +34,7 @@ resource "aws_iam_role" "chatwoot_irsa" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect    = "Allow"
+      Effect = "Allow"
       Principal = {
         Federated = local.oidc_provider_arn
       }
@@ -52,54 +52,3 @@ resource "aws_iam_role_policy_attachment" "chatwoot_irsa_s3" {
   role       = aws_iam_role.chatwoot_irsa.name
   policy_arn = aws_iam_policy.chatwoot_s3.arn
 }
-
-
-
-
-
-
-resource "aws_iam_role" "external_secrets_irsa" {
-  name = "${local.name_prefix}-external-secrets-irsa"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Principal = {
-        Federated = local.oidc_provider_arn
-      }
-      Action = "sts:AssumeRoleWithWebIdentity"
-      Condition = {
-        StringEquals = {
-          "${local.oidc_provider_host}:sub" = "system:serviceaccount:external-secrets:external-secrets"
-        }
-      }
-    }]
-  })
-}
-
-
-resource "aws_iam_role_policy_attachment" "external_secrets_sm" {
-  role       = aws_iam_role.external_secrets_irsa.name
-  policy_arn = aws_iam_policy.external_secrets_sm.arn
-}
-
-
-resource "kubernetes_namespace_v1" "external_secrets" {
-  metadata {
-    name = "external-secrets"
-  }
-}
-
-
-
-resource "kubernetes_service_account" "external_secrets" {
-  metadata {
-    name      = "external-secrets"
-    namespace = kubernetes_namespace_v1.external_secrets.metadata[0].name
-    annotations = {
-      "eks.amazonaws.com/role-arn" = aws_iam_role.external_secrets_irsa.arn
-    }
-  }
-}
-

@@ -44,7 +44,7 @@ redis:
   architecture: standalone
   auth:
     enabled: true
-    existingSecret: chatwoot-secrets
+    existingSecret: chatwoot-env
     existingSecretPasswordKey: REDIS_PASSWORD
   master:
     persistence:
