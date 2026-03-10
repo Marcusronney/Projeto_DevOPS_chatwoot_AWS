@@ -16,7 +16,7 @@ spec:
       targetRevision: "*"
       helm:
         valueFiles:
-          - $values/terraform\chatwoot-dev\aplicação\chatwoot\application.yaml
+          - $values/terraform\chatwoot-dev\app\chatwoot\application.yaml
 
     - repoURL: https://github.com/Marcusronney/Projeto_DevOPS_chatwoot_AWS.git
       targetRevision: main
