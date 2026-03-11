@@ -66,7 +66,7 @@ resource "aws_iam_policy" "lbc" {
           "ec2:DescribeVpcs",
           "ec2:DescribeInstances",
           "ec2:DescribeNetworkInterfaces",
-          "elasticloadbalancing:*"
+          "elasticloadbalancing:*",
           "elasticloadbalancing:DescribeLoadBalancers",
           "elasticloadbalancing:DescribeLoadBalancerAttributes",
           "elasticloadbalancing:DescribeListeners",
