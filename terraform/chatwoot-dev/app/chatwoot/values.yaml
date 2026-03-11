@@ -47,3 +47,4 @@ env:
   ACTIVE_STORAGE_SERVICE: "amazon"
   AWS_REGION: "us-east-1"
   S3_BUCKET_NAME: "chatwoot-dev-chatwoot-attachments-762012032320"
+  PGSSLMODE: "require"
