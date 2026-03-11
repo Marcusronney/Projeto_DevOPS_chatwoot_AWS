@@ -14,13 +14,13 @@ resource "aws_iam_policy" "external_secrets_sm" {
           "secretsmanager:DescribeSecret"
         ]
         Resource = [
-          "arn:aws:secretsmanager:${var.aws_region}:${data.aws_caller_identity.current.account_id}:secret:chatwoot/dev/app*"
+          "arn:aws:secretsmanager:${var.aws_region}:${data.aws_caller_identity.current.account_id}:secret:chatwoot/dev/app*",
+          "arn:aws:secretsmanager:${var.aws_region}:${data.aws_caller_identity.current.account_id}:secret:chatwoot-dev/rds/postgres*"
         ]
       }
     ]
   })
 }
-
 resource "aws_iam_role" "external_secrets_irsa" {
   name = "${local.name_prefix}-external-secrets-irsa"
 
