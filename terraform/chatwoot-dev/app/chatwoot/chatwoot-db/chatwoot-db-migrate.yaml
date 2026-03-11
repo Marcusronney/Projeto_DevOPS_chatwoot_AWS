@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: chatwoot-db-migrate
+  namespace: chatwoot
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: chatwoot
+      containers:
+        - name: db-migrate
+          image: chatwoot/chatwoot:v4.11.1
+          command: ["bundle", "exec", "rails", "db:migrate"]
+          env:
+            - name: RAILS_ENV
+              value: "production"
+            - name: INSTALLATION_ENV
+              value: "helm"
+            - name: FRONTEND_URL
+              value: "https://chatwoot.ronney.tech"
+            - name: FORCE_SSL
+              value: "false"
+            - name: ENABLE_ACCOUNT_SIGNUP
+              value: "false"
+            - name: ACTIVE_STORAGE_SERVICE
+              value: "amazon"
+            - name: AWS_REGION
+              value: "us-east-1"
+            - name: S3_BUCKET_NAME
+              value: "chatwoot-dev-chatwoot-attachments-762012032320"
+            - name: PGSSLMODE
+              value: "require"
+            - name: POSTGRES_HOST
+              value: "chatwoot-dev-postgres.car4ygsuqsqr.us-east-1.rds.amazonaws.com"
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DATABASE
+              value: "chatwoot"
+            - name: POSTGRES_USERNAME
+              value: "chatwoot"
+          envFrom:
+            - secretRef:
+                name: chatwoot-secrets
