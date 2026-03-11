@@ -1,3 +1,54 @@
+serviceAccount:
+  create: true
+  name: chatwoot
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::762012032320:role/chatwoot-dev-chatwoot-irsa"
+
+ingress:
+  enabled: true
+  ingressClassName: alb
+  hostname: "chatwoot.ronney.tech"
+  path: /
+  pathType: Prefix
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:762012032320:certificate/0b2c2f59-afd2-4ace-98bc-c67fd81b1518"
+    external-dns.alpha.kubernetes.io/hostname: "chatwoot.ronney.tech"
+
+postgresql:
+  enabled: false
+  postgresqlHost: "chatwoot-dev-postgres.car4ygsuqsqr.us-east-1.rds.amazonaws.com"
+  postgresqlPort: 5432
+  auth:
+    username: "chatwoot"
+    database: "chatwoot"
+    postgresPassword: ""
+
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: true
+    existingSecret: chatwoot-secrets
+    existingSecretPasswordKey: REDIS_PASSWORD
+  master:
+    persistence:
+      enabled: false
+
+existingEnvSecret: chatwoot-secrets
+
+env:
+  FRONTEND_URL: "https://chatwoot.ronney.tech"
+  FORCE_SSL: "false"
+  ENABLE_ACCOUNT_SIGNUP: "false"
+  ACTIVE_STORAGE_SERVICE: "amazon"
+  AWS_REGION: "us-east-1"
+  S3_BUCKET_NAME: "chatwoot-dev-chatwoot-attachments-762012032320"
+  PGSSLMODE: "require"
+
 web:
   startupProbe:
     enabled: true
@@ -9,6 +60,7 @@ web:
     periodSeconds: 10
     timeoutSeconds: 5
     failureThreshold: 30
+    successThreshold: 1
 
   readinessProbe:
     enabled: true
@@ -20,6 +72,7 @@ web:
     periodSeconds: 10
     timeoutSeconds: 5
     failureThreshold: 6
+    successThreshold: 1
 
   livenessProbe:
     enabled: true
@@ -31,3 +84,4 @@ web:
     periodSeconds: 15
     timeoutSeconds: 5
     failureThreshold: 6
+    successThreshold: 1
