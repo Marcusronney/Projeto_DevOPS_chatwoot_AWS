@@ -48,3 +48,40 @@ env:
   AWS_REGION: "us-east-1"
   S3_BUCKET_NAME: "chatwoot-dev-chatwoot-attachments-762012032320"
   PGSSLMODE: "require"
+
+web:
+  startupProbe:
+    enabled: true
+    httpGet:
+      path: /health
+      port: 3000
+      scheme: HTTP
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 30
+    successThreshold: 1
+
+  readinessProbe:
+    enabled: true
+    httpGet:
+      path: /health
+      port: 3000
+      scheme: HTTP
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+  livenessProbe:
+    enabled: true
+    httpGet:
+      path: /health
+      port: 3000
+      scheme: HTTP
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1

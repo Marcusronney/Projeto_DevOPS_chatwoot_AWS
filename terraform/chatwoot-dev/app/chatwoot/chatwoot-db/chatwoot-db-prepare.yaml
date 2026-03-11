@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: chatwoot-db-prepare
+  name: chatwoot-db-migrate
   namespace: chatwoot
 spec:
   backoffLimit: 3
@@ -10,9 +10,9 @@ spec:
       restartPolicy: Never
       serviceAccountName: chatwoot
       containers:
-        - name: db-prepare
+        - name: db-migrate
           image: chatwoot/chatwoot:v4.11.1
-          command: ["bundle", "exec", "rails", "db:prepare"]
+          command: ["bundle", "exec", "rails", "db:migrate"]
           envFrom:
             - secretRef:
                 name: chatwoot-env
