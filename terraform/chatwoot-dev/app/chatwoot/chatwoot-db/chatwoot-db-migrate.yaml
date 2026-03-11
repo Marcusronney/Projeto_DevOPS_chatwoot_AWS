@@ -32,6 +32,7 @@ spec:
               value: "chatwoot-dev-chatwoot-attachments-762012032320"
             - name: PGSSLMODE
               value: "require"
+
             - name: POSTGRES_HOST
               value: "chatwoot-dev-postgres.car4ygsuqsqr.us-east-1.rds.amazonaws.com"
             - name: POSTGRES_PORT
@@ -40,6 +41,13 @@ spec:
               value: "chatwoot"
             - name: POSTGRES_USERNAME
               value: "chatwoot"
+
+            - name: REDIS_HOST
+              value: "chatwoot-chatwoot-redis-master"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_URL
+              value: "redis://:$(REDIS_PASSWORD)@chatwoot-chatwoot-redis-master:6379"
           envFrom:
             - secretRef:
                 name: chatwoot-secrets
