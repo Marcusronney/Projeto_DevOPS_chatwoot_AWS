@@ -19,6 +19,8 @@ A arquitetura está organizada em três camadas principais:
 2. Addons do cluster Kubernetes
 3. Aplicação Chatwoot via GitOps com ArgoCD
 
+![alt text](imagens/diagrama.png)
+
 ![image.png](image.png)
 
 ---
