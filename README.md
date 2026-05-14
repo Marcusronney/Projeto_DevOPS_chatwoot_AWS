@@ -1711,15 +1711,40 @@ Após aplicar o application.yaml, o ArgoCD irá registrar e sincronizar todos os
 
 ---
 
----
+## Banco de Dados do Chatwoot
+
+Este projeto utiliza **Amazon RDS PostgreSQL** como banco de dados principal do Chatwoot.
+
+O Chatwoot é uma aplicação baseada em Ruby on Rails e depende de um banco PostgreSQL para armazenar dados como usuários, contas, conversas, contatos, caixas de entrada, mensagens, configurações e demais informações da aplicação.
+
+Embora o Helm Chart oficial do Chatwoot possa subir um PostgreSQL interno dentro do Kubernetes, foi adotado o uso de **RDS externo** para separar a camada de aplicação da camada de dados.
 
 ---
 
----
 
----
+### Motivos para usar RDS
 
----
+O uso do RDS traz alguns benefícios importantes:
+
+- Banco de dados gerenciado pela AWS.
+- Separação entre aplicação e dados.
+- Menor risco de perda de dados em caso de problemas no cluster Kubernetes.
+- Facilidade de backup e snapshots.
+- Melhor aderência a uma arquitetura mais próxima de produção.
+- Menor complexidade operacional dentro do Kubernetes.
+- Possibilidade de atualizar/recriar o cluster EKS sem destruir o banco da aplicação.
+- Melhor controle de rede por Security Groups.
+- Melhor organização entre infraestrutura, aplicação e dados.
+
+A arquitetura final segue esta ideia:
+
+```text
+Chatwoot Web/Worker no EKS
+        ↓
+Amazon RDS PostgreSQL
+
+
+
 
 -Conectando ao RDS
 
