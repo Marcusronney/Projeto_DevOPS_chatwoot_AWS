@@ -19,9 +19,7 @@ A arquitetura está organizada em três camadas principais:
 2. Addons do cluster Kubernetes
 3. Aplicação Chatwoot via GitOps com ArgoCD
 
-![alt text](imagens/diagrama.png)
-
-![image.png](image.png)
+![Diagrama](imagens/diagrama.png)
 
 ---
 
@@ -80,6 +78,41 @@ terraform/
 ```
 
 ---
+
+
+## Stack do Projeto
+
+###  AWS / AWS
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white)
+![Amazon EKS](https://img.shields.io/badge/Amazon%20EKS-FF9900?style=for-the-badge&logo=amazoneks&logoColor=white)
+![Amazon RDS](https://img.shields.io/badge/Amazon%20RDS-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
+![AWS Secrets Manager](https://img.shields.io/badge/AWS%20Secrets%20Manager-DD344C?style=for-the-badge&logo=amazonwebservices&logoColor=white)
+![AWS Certificate Manager](https://img.shields.io/badge/AWS%20Certificate%20Manager-FF9900?style=for-the-badge&logo=amazonwebservices&logoColor=white)
+![Ingress](https://img.shields.io/badge/Ingress-009639?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Hostinger](https://img.shields.io/badge/Hostinger-673DE6?style=for-the-badge&logo=hostinger&logoColor=white)
+
+
+###  IaC / GitOps
+![Terraform](https://img.shields.io/badge/Terraform-844FBA?style=for-the-badge&logo=terraform&logoColor=white)
+![ArgoCD](https://img.shields.io/badge/ArgoCD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
+![Helm](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+
+### Containers e Orquestração
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+
+### Banco e Cache
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+
+### Segurança e Integrações
+![External Secrets](https://img.shields.io/badge/External%20Secrets-3C7DD9?style=for-the-badge&logo=kubernetes&logoColor=white)
+![IRSA](https://img.shields.io/badge/IRSA-AWS-orange?style=for-the-badge)
+![AWS Load Balancer Controller](https://img.shields.io/badge/AWS%20Load%20Balancer%20Controller-FF9900?style=for-the-badge&logo=amazonwebservices&logoColor=white)
+
+
 
 # Infraestrutura AWS
 
@@ -476,19 +509,6 @@ A aplicação Chatwoot fica disponível em:
 ```
 https://chatwoot.ronney.tech
 ```
-
-Infraestrutura utilizada:
-
-- AWS EKS
-- AWS RDS
-- AWS S3
-- AWS ALB
-- Route53
-- Terraform
-- Helm
-- ArgoCD
-
----
 
 # DEPLOY PRÁTICO
 
