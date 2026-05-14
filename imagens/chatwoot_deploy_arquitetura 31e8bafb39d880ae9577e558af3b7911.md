@@ -501,7 +501,7 @@ aws s3api create-bucket \
 
 ```
 
-![image.png](imagens/image%201.png)
+![image.png](image%201.png)
 
 Bucket para Versionamento
 
@@ -511,7 +511,7 @@ aws s3api put-bucket-versioning \
   --versioning-configuration Status=Enabled
 ```
 
-![image.png](imagens/image%202.png)
+![image.png](image%202.png)
 
 DynamoDB
 
@@ -523,7 +523,7 @@ aws dynamodb create-table \
   --billing-mode PAY_PER_REQUEST
 ```
 
-![image.png](imagens/image%203.png)
+![image.png](image%203.png)
 
 Verificando Status da Tabela do Dynamodb
 
@@ -532,7 +532,7 @@ aws dynamodb describe-table --table-name bucketchatwootlock \
 --query "Table.TableStatus"
 ```
 
-![image.png](imagens/image%204.png)
+![image.png](image%204.png)
 
 Verificando Versionamento do Bucket
 
@@ -540,7 +540,7 @@ Verificando Versionamento do Bucket
 aws s3api get-bucket-versioning --bucket bucketchatwootprojetoaws
 ```
 
-![image.png](imagens/image%205.png)
+![image.png](image%205.png)
 
 backend.tf
 
@@ -1099,7 +1099,7 @@ Certificate Manager
 Request Certificate
 ```
 
-![image.png](imagens/image%206.png)
+![image.png](image%206.png)
 
 3️⃣ Escolha:
 
@@ -1107,7 +1107,7 @@ Request Certificate
 Public certificate
 ```
 
-![image.png](imagens/image%207.png)
+![image.png](image%207.png)
 
 4️⃣ Coloque o domínio e deixe DNS validation:
 
@@ -1115,7 +1115,7 @@ Public certificate
 chatwoot.ronney.tech
 ```
 
-![image.png](imagens/image%208.png)
+![image.png](image%208.png)
 
 6️⃣ A AWS gera um registro CNAME.
 
@@ -1125,7 +1125,7 @@ _ef9a2a61523a897bf36df108284ac357.chatwoot.ronney.tech.
 
 Você cria isso no DNS.
 
-![image.png](imagens/image%209.png)
+![image.png](image%209.png)
 
 RDS: Endereço do Banco PostgreSQL
 
@@ -1183,17 +1183,17 @@ Provisionando os Secrets, primeiramente, vou Criar todos os Secrets diretamente 
 
 1º - AWS Secrets Manager - Store a new secret
 
-![image.png](imagens/image%2010.png)
+![image.png](image%2010.png)
 
 2º - Secret do tipo Other Type of secret
 
-![image.png](imagens/image%2011.png)
+![image.png](image%2011.png)
 
 3º - O nome do secret é chatwoot/dev/app
 
-![image.png](imagens/image%2012.png)
+![image.png](image%2012.png)
 
-![image.png](imagens/image%2013.png)
+![image.png](image%2013.png)
 
 Posso conferir o secret pelo CLI.
 
@@ -1203,7 +1203,7 @@ aws secretsmanager describe-secret \
   --region us-east-1
 ```
 
-![image.png](imagens/image%2014.png)
+![image.png](image%2014.png)
 
 Valores do Secret:
 
@@ -1213,7 +1213,7 @@ aws secretsmanager get-secret-value \
   --region us-east-1
 ```
 
-![image.png](imagens/image%2015.png)
+![image.png](image%2015.png)
 
 ### External Secrets Operator
 
@@ -1338,7 +1338,7 @@ terraform plan -out tfplan
 terraform apply tfplan
 ```
 
-![image.png](imagens/image%2016.png)
+![image.png](image%2016.png)
 
 Essa pipeline irá criar os módulos:
 
@@ -1355,11 +1355,11 @@ Essa pipeline irá criar os módulos:
 - Repositório ECR
 - Secrets Manager (senha do banco)
 
-![image.png](imagens/image%2017.png)
+![image.png](image%2017.png)
 
 ### CLUSTER ONLINE
 
-![image.png](imagens/image%2018.png)
+![image.png](image%2018.png)
 
 Com meu Cluster chatwoot-dev criado, posso me conectar ao kubeconfig
 
@@ -1367,7 +1367,7 @@ Com meu Cluster chatwoot-dev criado, posso me conectar ao kubeconfig
 aws eks update-kubeconfig --region us-east-1 --name chatwoot-dev
 ```
 
-![image.png](imagens/image%2019.png)
+![image.png](image%2019.png)
 
 ### Verificando a infraestrutura
 
@@ -1379,7 +1379,7 @@ aws ec2 describe-instances \
   --output table
 ```
 
-![image.png](imagens/image%2020.png)
+![image.png](image%2020.png)
 
 Elastic IPs
 
@@ -1390,7 +1390,7 @@ for r in $(aws ec2 describe-regions --query "Regions[].RegionName" --output text
 done
 ```
 
-![image.png](imagens/image%2021.png)
+![image.png](image%2021.png)
 
 NAT Gateways
 
@@ -1403,7 +1403,7 @@ for r in $(aws ec2 describe-regions --query "Regions[].RegionName" --output text
 done
 ```
 
-![image.png](imagens/image%2022.png)
+![image.png](image%2022.png)
 
 Load Balancers
 
@@ -1425,7 +1425,7 @@ for r in $(aws ec2 describe-regions --query "Regions[].RegionName" --output text
 done
 ```
 
-![image.png](imagens/image%2023.png)
+![image.png](image%2023.png)
 
 VPCs
 
@@ -1435,7 +1435,7 @@ aws ec2 describe-vpcs \
   --output table
 ```
 
-![image.png](imagens/image%2024.png)
+![image.png](image%2024.png)
 
 Subnets
 
@@ -1445,7 +1445,7 @@ aws ec2 describe-subnets \
   --output table
 ```
 
-![image.png](imagens/image%2025.png)
+![image.png](image%2025.png)
 
 Verificando os nodes
 
@@ -1453,7 +1453,7 @@ Verificando os nodes
 kubectl get nodes
 ```
 
-![image.png](imagens/image%2026.png)
+![image.png](image%2026.png)
 
 Verificando Pods
 
@@ -1461,7 +1461,7 @@ Verificando Pods
 kubectl get pods -A
 ```
 
-![image.png](imagens/image%2027.png)
+![image.png](image%2027.png)
 
 # Addons do EKS
 
@@ -1490,7 +1490,7 @@ Dentro do cluster Kubernetes:
 - IAM Roles (IRSA)
 - Policies AWS
 
-![image.png](imagens/image%2028.png)
+![image.png](image%2028.png)
 
 Verificando ALB Controller
 
@@ -1499,7 +1499,7 @@ kubectl get svc -n kube-system aws-load-balancer-webhook-service
 kubectl get endpoints -n kube-system aws-load-balancer-webhook-service
 ```
 
-![image.png](imagens/image%2029.png)
+![image.png](image%2029.png)
 
 Namespace
 
@@ -1507,7 +1507,7 @@ Namespace
 kubectl get ns
 ```
 
-![image.png](imagens/image%2030.png)
+![image.png](image%2030.png)
 
 Verificando a IAM Role do ALB
 
@@ -1515,7 +1515,7 @@ Verificando a IAM Role do ALB
 aws iam get-role --role-name chatwoot-dev-lbc-irsa
 ```
 
-![image.png](imagens/image%2031.png)
+![image.png](image%2031.png)
 
 ExternalDNS
 
@@ -1523,7 +1523,7 @@ ExternalDNS
 aws iam get-role --role-name chatwoot-dev-externaldns-irsa
 ```
 
-![image.png](imagens/image%2032.png)
+![image.png](image%2032.png)
 
 Polices do EKS
 
@@ -1532,7 +1532,7 @@ aws iam get-policy --policy-arn arn:aws:iam::762012032320:policy/chatwoot-dev-lb
 aws iam get-policy --policy-arn arn:aws:iam::762012032320:policy/chatwoot-dev-externaldns-policy
 ```
 
-![image.png](imagens/image%2033.png)
+![image.png](image%2033.png)
 
 # Infraestrutura pronta!
 
@@ -1546,13 +1546,13 @@ Primeiramente irei verificar o conteúdo da namespace do ArgoCD.
 kubectl get pods -n argocd
 ```
 
-![image.png](imagens/image%2034.png)
+![image.png](image%2034.png)
 
 ```jsx
 kubectl get service -n argocd
 ```
 
-![image.png](imagens/image%2035.png)
+![image.png](image%2035.png)
 
 Pods e Services rodando, irei criar um tunel diretamente da minha máquina com o Pod na AWS com o Port-Forward.
 
@@ -1560,7 +1560,7 @@ Pods e Services rodando, irei criar um tunel diretamente da minha máquina com o
 kubectl port-forward svc/argocd-server -n argocd 8080:80
 ```
 
-![image.png](imagens/image%2036.png)
+![image.png](image%2036.png)
 
 Assim posso acessar o ArgoCD da minha máquina diretamente
 
@@ -1568,7 +1568,7 @@ Assim posso acessar o ArgoCD da minha máquina diretamente
 http://localhost:8080
 ```
 
-![image.png](imagens/image%2037.png)
+![image.png](image%2037.png)
 
 Por padrão, o usuário do ArgoCD é admin. A senha terei que descriptografar o secret no service argocd-initial-admin-secret no formato Base64.
 
@@ -1577,13 +1577,13 @@ kubectl -n argocd get secret argocd-initial-admin-secret \
 -o jsonpath="{.data.password}" | base64 --decode
 ```
 
-![image.png](imagens/image%2038.png)
+![image.png](image%2038.png)
 
 5H3gt0HpxnqU-e-3
 
 ArgoCD acessado.
 
-![image.png](imagens/image%2039.png)
+![image.png](image%2039.png)
 
 Apps-for-Apps
 
@@ -1593,11 +1593,11 @@ Apps-for-Apps
 kubectl apply -f application.yaml
 ```
 
-![image.png](imagens/image%2040.png)
+![image.png](image%2040.png)
 
 Após sincronizar, o ArgoCD irá efetuar o deploy dos manifests apontados no application.yaml
 
-![image.png](imagens/image%2041.png)
+![image.png](image%2041.png)
 
 Verificando as Namespaces
 
@@ -1605,7 +1605,7 @@ Verificando as Namespaces
 kubectl get ns
 ```
 
-![image.png](imagens/image%2042.png)
+![image.png](image%2042.png)
 
 Verificando o SecretStore na namespace chatwoot
 
@@ -1613,7 +1613,7 @@ Verificando o SecretStore na namespace chatwoot
 kubectl get secretstore -n chatwoot
 ```
 
-![image.png](imagens/image%2043.png)
+![image.png](image%2043.png)
 
 Detalhando o secret
 
@@ -1621,7 +1621,7 @@ Detalhando o secret
 kubectl describe secretstore aws-secretsmanager -n chatwoot
 ```
 
-![image.png](imagens/image%2044.png)
+![image.png](image%2044.png)
 
 Verificando o External Secret
 
@@ -1629,13 +1629,13 @@ Verificando o External Secret
 kubectl get externalsecret -n chatwoot
 ```
 
-![image.png](imagens/image%2045.png)
+![image.png](image%2045.png)
 
 ```jsx
 kubectl describe externalsecret chatwoot-secrets -n chatwoot
 ```
 
-![image.png](imagens/image%2046.png)
+![image.png](image%2046.png)
 
 Secret Kubernetes
 
@@ -1643,7 +1643,7 @@ Secret Kubernetes
 kubectl get secret -n chatwoot
 ```
 
-![image.png](imagens/image%2047.png)
+![image.png](image%2047.png)
 
 Detalhando:
 
@@ -1651,7 +1651,7 @@ Detalhando:
 kubectl describe secret chatwoot-secrets -n chatwoot
 ```
 
-![image.png](imagens/image%2048.png)
+![image.png](image%2048.png)
 
 Eu consigo ver a chave gerada do Secret:
 
@@ -1659,7 +1659,7 @@ Eu consigo ver a chave gerada do Secret:
 kubectl get secret chatwoot-secrets -n chatwoot -o yaml
 ```
 
-![image.png](imagens/image%2049.png)
+![image.png](image%2049.png)
 
 Secret que o Chatwoot irá usar:
 
@@ -1667,7 +1667,7 @@ Secret que o Chatwoot irá usar:
 kubectl get secret chatwoot-secrets -n chatwoot
 ```
 
-![image.png](imagens/image%2050.png)
+![image.png](image%2050.png)
 
 E por fim eu posso verificar se a chave gerada no K8S bate com o IRSA
 
@@ -1675,7 +1675,7 @@ E por fim eu posso verificar se a chave gerada no K8S bate com o IRSA
 aws secretsmanager list-secrets | grep chatwoot
 ```
 
-![image.png](imagens/image%2051.png)
+![image.png](image%2051.png)
 
 ---
 
@@ -1703,7 +1703,7 @@ Deploy do application
 kubectl apply -f application.yaml
 ```
 
-![image.png](imagens/image%2052.png)
+![image.png](image%2052.png)
 
 Após aplicar o application.yaml, o ArgoCD irá registrar e sincronizar todos os manifests no meu cluster.
 
@@ -1737,7 +1737,7 @@ kubectl run psql-client \
   "sslmode=require"
 ```
 
-![image.png](imagens/image%2053.png)
+![image.png](image%2053.png)
 
 Ver senha Real do POSTGRES_PASSWORD
 
@@ -1745,7 +1745,7 @@ Ver senha Real do POSTGRES_PASSWORD
 kubectl get secret chatwoot-secrets -n chatwoot -o jsonpath="{.data.POSTGRES_PASSWORD}" | base64 -d
 ```
 
-![image.png](imagens/image%2054.png)
+![image.png](image%2054.png)
 
 Salvando a senha:
 
@@ -1784,13 +1784,13 @@ kubectl run chatwoot-db-prepare \
   --command -- bundle exec rails db:prepare
 ```
 
-![image.png](imagens/image%2055.png)
+![image.png](image%2055.png)
 
-![image.png](imagens/imagens/image%2056.png)
+![image.png](image%2056.png)
 
 ### Bootstrap
 
-![image.png](imagens/image%2057.png)
+![image.png](image%2057.png)
 
 ```jsx
 kubectl apply -f application.yaml
@@ -1809,7 +1809,7 @@ Aplicando DB
 kubectl apply -f chatwoot-db-prepare.yaml
 ```
 
-![image.png](imagens/image%2058.png)
+![image.png](image%2058.png)
 
 Validando
 
