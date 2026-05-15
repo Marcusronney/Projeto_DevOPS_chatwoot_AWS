@@ -1,4 +1,3 @@
-# chatwoot_deploy_arquitetura
 
 # Arquitetura e Fluxo de Deploy — Chatwoot na AWS (EKS + Terraform + ArgoCD + Grafana + Prometheus)
 
@@ -449,7 +448,7 @@ Provisiona:
 terraform/chatwoot-dev/addons/eks
 ```
 
-[Chatwoot na AWS](https://www.notion.so/Chatwoot-na-AWS-3118bafb39d8803993baeb495721c219?pvs=21)
+
 
 Instala:
 
@@ -504,13 +503,15 @@ DNS criado automaticamente
 
 # Resultado Final
 
-A aplicação Chatwoot fica disponível em:
+A aplicação Chatwoot ficará disponível em:
 
 ```
 https://chatwoot.ronney.tech
 ```
 
-# DEPLOY PRÁTICO
+
+---
+# DEPLOY
 
 Criando Bucket S3 para state do Terraform. O Backend remoto do Terraform (S3 + DynamoDB) Isso é o padrão pra evitar state local e concorrência. Porque o backend precisa existir antes do Terraform rodar. O Terraform não pode usar um bucket que ele ainda vai criar.
 
@@ -1241,13 +1242,13 @@ aws secretsmanager get-secret-value \
 
 O External Secrets está sendo provisionado pelo terraform/chatwoot-dev/addons/eks/external-secrets.tf.
 
-Ele tem a função de permitir acesso ao Secrets Manager com o Resource: aws_iam_policy.external_secrets_sm. Ele possuí as permissões secretsmanager:GetSecretValue e secretsmanager:DescribeSecret. O External irá buscar todas os secrets na AWS de nome “chatwoot/dev/app” e criar no Kubernetes o secret “chatwoot-secrets na namespace chatwoot.
+Ele tem a função de permitir acesso ao Secrets Manager com o Resource: **aws_iam_policy.external_secrets_sm**. Ele possuí as permissões **secretsmanager:GetSecretValue e secretsmanager:DescribeSecret**. O External irá buscar todas os secrets na AWS de nome “chatwoot/dev/app” e criar no Kubernetes o secret **chatwoot-secrets** na namespace chatwoot.
 
-A role aws_iam_role.external_secrets_irsa usa o OIDC do Cluster EKS, assim os pods podem assumir credenciais da AWS diretamente.
+A role **aws_iam_role.external_secrets_irsa** usa o OIDC do Cluster EKS, assim os pods podem assumir credenciais da AWS diretamente.
 
-O manifest /app/chatwoot/secretstore-chatwoot.yaml define onde os secrets serão lidos. 
+O manifest */app/chatwoot/secretstore-chatwoot.yaml* define onde os secrets serão lidos. 
 
-/addons/eks/external-secrets.tf
+*/addons/eks/external-secrets.tf*
 
 Instala:
 
