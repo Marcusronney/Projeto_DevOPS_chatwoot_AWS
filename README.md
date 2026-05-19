@@ -159,9 +159,10 @@ Antes de executar a pipeline ou rodar o Terraform, é necessário criar o **back
 
 Eu defini o backend remoto composto por:
 
-```text
+```
 Amazon S3       : armazena o arquivo terraform.tfstate
 Amazon DynamoDB : controla o lock de execução do Terraform
+```
 
 Estou usando o S3 para armazenar o State do Terraform pois ao executar a pipeline, o terraform cria um arquivo chamado **terraform.tfstate** para armazenar o estado atual da infraestrutura. Esse arquivo irá mapaear o código do terraform com os recursos criados na AWS, como VPC, EKS,RDS, S3, IAM Roles, Secrets, Security Groups, LB, etc.
 
